@@ -1,5 +1,4 @@
 #pragma once
-#include <stdio.h>
 #include <stdint.h>
 
 // https://en.wikipedia.org/wiki/BMP_file_format
