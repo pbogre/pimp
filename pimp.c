@@ -7,6 +7,7 @@
 #include "file.h"
 #include "utils.h"
 #include "commands/fill.h"
+#include "commands/bw.h"
 
 int main(int argc, char ** argv){
   char * file_name;
@@ -20,13 +21,13 @@ int main(int argc, char ** argv){
   IMAGE img = image_from_bmp(file_name);
 
   if(strcmp(command, "fill") == 0){
-    if(argc < 6){
-      printf("Missing required options: first x, first y, last x, last y.\n");
+    if(argc <= 6){
+      printf("Missing required arguments: first x, first y, last x, last y.\n");
       exit(EXIT_FAILURE);
     }
 
     RGB color;
-    if(argc < 9) color = make_rgb(0, 0, 0);
+    if(argc <= 9) color = make_rgb_mono(0);
     else color = make_rgb(strtol(argv[7], NULL, 10),
 			  strtol(argv[8], NULL, 10),
 			  strtol(argv[9], NULL, 10));
@@ -41,6 +42,26 @@ int main(int argc, char ** argv){
 				    strtol(argv[4], NULL, 10), 
 				    strtol(argv[5], NULL, 10),
 				    strtol(argv[6], NULL, 10));
+  }
+
+  else if (strcmp(command, "bw") == 0){
+
+    int fx = 0;
+    int fy = 0;
+    int lx = img.width-1;
+    int ly = img.height-1;
+    if(argc > 3){
+      fx = strtol(argv[3], NULL, 10);
+      fy = strtol(argv[4], NULL, 10);
+      lx = strtol(argv[5], NULL, 10);
+      ly = strtol(argv[6], NULL, 10);
+    }
+
+    printf("--- BLACK & WHITE ---\n"
+	   "First Pixel: (%d, %d)\n"
+	   "Last Pixel: (%d, %d)\n",
+	   fx, fy, lx, ly);
+    black_white_image24(img, fx, fy, lx, ly); 
   }
 
   char * new_file_name = malloc(4+sizeof(file_name)+1);
