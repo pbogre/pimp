@@ -141,9 +141,9 @@ void bmp_from_image24(char * file_name, IMAGE img24){
   fclose(fp);
 }
 
-void fill_region_image24(IMAGE img24, RGB color, int fx, int fy, int sx, int sy){
-  for(int y = fy; y <= sy; y++){
-    for(int x = fx; x <= sx; x++){
+void fill_region_image24(IMAGE img24, RGB color, int fx, int fy, int lx, int ly){
+  for(int y = fy; y <= ly; y++){
+    for(int x = fx; x <= lx; x++){
       img24.pixels[y][x] = color;
     }
   }
@@ -162,7 +162,7 @@ int main(int argc, char ** argv){
 
   if(strcmp(command, "fill") == 0){
     if(argc < 6){
-      printf("Missing required options: first x, first y, second x, second y.\n");
+      printf("Missing required options: first x, first y, last x, last y.\n");
       exit(EXIT_FAILURE);
     }
 
@@ -175,7 +175,7 @@ int main(int argc, char ** argv){
     printf("--- FILL ---\n"
 	   "Color: %d-%d-%d\n"
 	   "First Point: (%s, %s)\n"
-	   "Second Point: (%s, %s)\n",
+	   "Last Point: (%s, %s)\n",
 	   color.R, color.G, color.B, argv[3], argv[4], argv[5], argv[6]);
 
     fill_region_image24(img, color, strtol(argv[3], NULL, 10),
