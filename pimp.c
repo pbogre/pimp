@@ -5,6 +5,7 @@
 
 #include "bmp.h"
 #include "utils.h"
+#include "commands/fill.h"
 
 IMAGE image24_from_data(FILE *fp, int width, int height){
   IMAGE img;
@@ -139,14 +140,6 @@ void bmp_from_image24(char * file_name, IMAGE img24){
   }
 
   fclose(fp);
-}
-
-void fill_region_image24(IMAGE img24, RGB color, int fx, int fy, int lx, int ly){
-  for(int y = fy; y <= ly; y++){
-    for(int x = fx; x <= lx; x++){
-      img24.pixels[y][x] = color;
-    }
-  }
 }
 
 int main(int argc, char ** argv){
