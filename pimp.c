@@ -186,12 +186,9 @@ void bmp_from_image24(char * file_name, IMAGE img24){
   fwrite(&dibheader.compression, 6*sizeof(uint32_t), 1, fp);
  
   // y loop is backward because pixels must be bottom -> up
-  // each rgb value is put manually because it must be B,G,R
   for(int y = img24.height-1; y >= 0; y--){
     for(int x = 0; x < img24.width; x++){
-      fwrite(&img24.pixels[y][x].B, 1, 1, fp);
-      fwrite(&img24.pixels[y][x].G, 1, 1, fp);
-      fwrite(&img24.pixels[y][x].R, 1, 1, fp);
+      fwrite(&img24.pixels[y][x], sizeof(RGB), 1, fp);
     }
   }
 
@@ -199,8 +196,8 @@ void bmp_from_image24(char * file_name, IMAGE img24){
 }
 
 void fill_region_image24(IMAGE img24, RGB color, int fx, int fy, int sx, int sy){
-  for(int y = fy; y < sy; y++){
-    for(int x = fx; x < sx; x++){
+  for(int y = fy; y <= sy; y++){
+    for(int x = fx; x <= sx; x++){
       img24.pixels[y][x] = color;
     }
   }
