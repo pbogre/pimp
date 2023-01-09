@@ -1,5 +1,5 @@
 # pimp
-Pimp your images using Pietro's Image Manipulation Project (P.I.M.P)
+Pimp your images using Pietro's Image Manipulation Project (P.I.M.P.)
 
 ### Disclaimer
 This project is still heavily work in progress. Many features are missing and as of right now only the very bare bones of the idea are available.
