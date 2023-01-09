@@ -16,7 +16,9 @@ This serves as a fun exercise for stuff like memory allocation, bytes, and file 
 ## usage
 `pimp <original_file> <command> [options]`
 
-Various commands are planned for the future, but right now here are the instructions for the ones which have been implemented:
+Various commands are planned for the future, but right now here are the instructions for the ones which have been implemented
+
+---
 ### fill 
 | argument | description | required |
 |----------|-------------|:--------:|
@@ -24,26 +26,40 @@ Various commands are planned for the future, but right now here are the instruct
 | `first_y`  | Vertical position of first pixel   | ✅ |
 | `last_x`   | Horizontal position of last pixel  | ✅ |
 | `last_y`   | Vertical position of last pixel    | ✅ | 
-| `red`      | Red value of color (0-255) (Default: 0) |  |
-| `green`    | Green value of color (0-255) (Default: 0) |  |
-| `blue`     | Blue value of color (0-255) (Default: 0) | |
+| `red`      | Red value of color (0-255) (Default: 0) |❌|
+| `green`    | Green value of color (0-255) (Default: 0) |❌|
+| `blue`     | Blue value of color (0-255) (Default: 0) |❌|
 
-Examples:
+**Examples**
 
-`pimp image.bmp fill 100 100 300 300`
+`pimp image.bmp fill 100 100 300 300` Fills range (100, 100) -> (300, 300) with the default color black (0-0-0)
 
-Fills a square from the points (100, 100) to points (300, 300) with the default color black
+`pimp image.bmp fill 200 200 600 300 255 0 255` Fills range (200, 200) -> (600, 300) with the color purple (255-0-255)
 
-`pimp image.bmp fill 200 200 600 300 255 0 255`
+---
 
-Fills a rectangle with the color purple (255-0-255)
+### black and white
+| argument | description | required |
+|----------|-------------|:--------:|
+| `first_x`  | Horizontal position of first pixel |❌|
+| `first_y`  | Vertical position of first pixel   |❌|
+| `last_x`   | Horizontal position of last pixel  |❌|
+| `last_y`   | Vertical position of last pixel    |❌| 
+
+**Examples**
+
+`pimp image.bmp bw` Converts entire image to grayscale
+
+`pimp image.bmp bw 10 30 100 130` Converts pixels in range (10, 30) -> (100, 130) to grayscale
+
+---
 
 ## to-do
 - [x] ~~read & write bmp files~~
 - [x] ~~improve file structure~~
 - [x] ~~fill command~~
+- [x] ~~black and white command~~
 - [ ] mirror command
-- [ ] black and white command
 - [ ] crop command
 - [ ] blur command
 - [ ] gaussian blur command
