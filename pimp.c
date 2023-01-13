@@ -6,8 +6,10 @@
 #include "bmp.h"
 #include "file.h"
 #include "utils.h"
+
 #include "commands/fill.h"
 #include "commands/bw.h"
+#include "commands/mirror.h"
 
 int main(int argc, char ** argv){
   char * file_name;
@@ -26,6 +28,13 @@ int main(int argc, char ** argv){
       exit(EXIT_FAILURE);
     }
 
+    // should i check if the coordinates are valid? e.g. x < img.width?
+    // nah...
+    int fx = strtol(argv[3], NULL, 10);
+    int lx = strtol(argv[5], NULL, 10);
+    int fy = strtol(argv[4], NULL, 10);
+    int ly = strtol(argv[6], NULL, 10);
+
     RGB color;
     if(argc <= 9) color = make_rgb_mono(0);
     else color = make_rgb(strtol(argv[7], NULL, 10),
@@ -34,18 +43,16 @@ int main(int argc, char ** argv){
 
     printf("--- FILL ---\n"
 	   "Color: %d-%d-%d\n"
-	   "First Point: (%s, %s)\n"
-	   "Last Point: (%s, %s)\n",
-	   color.R, color.G, color.B, argv[3], argv[4], argv[5], argv[6]);
+	   "First Point: (%d, %d)\n"
+	   "Last Point: (%d, %d)\n"
+	   "Region Size: (%d, %d)\n",
+	   color.R, color.G, color.B, fx, fy, lx, ly, 
+	   lx-fx+1, ly-fy+1);
 
-    fill_region_image24(img, color, strtol(argv[3], NULL, 10),
-				    strtol(argv[4], NULL, 10), 
-				    strtol(argv[5], NULL, 10),
-				    strtol(argv[6], NULL, 10));
+    fill_region_image24(img, color, fx, fy, lx, ly);
   }
 
   else if (strcmp(command, "bw") == 0){
-
     int fx = 0;
     int fy = 0;
     int lx = img.width-1;
@@ -59,9 +66,33 @@ int main(int argc, char ** argv){
 
     printf("--- BLACK & WHITE ---\n"
 	   "First Pixel: (%d, %d)\n"
-	   "Last Pixel: (%d, %d)\n",
-	   fx, fy, lx, ly);
+	   "Last Pixel: (%d, %d)\n"
+	   "Region Size: (%d, %d)\n",
+	   fx, fy, lx, ly, lx-fx+1, ly-fy+1);
+
     black_white_image24(img, fx, fy, lx, ly); 
+  }
+
+
+  else if (strcmp(command, "mirror") == 0){
+    int fx = 0;
+    int fy = 0;
+    int lx = img.width-1;
+    int ly = img.height-1;
+    if(argc > 3){
+      fx = strtol(argv[3], NULL, 10);
+      fy = strtol(argv[4], NULL, 10);
+      lx = strtol(argv[5], NULL, 10);
+      ly = strtol(argv[6], NULL, 10);
+    }
+
+    printf("--- MIRROR ---\n"
+	   "First Pixel: (%d, %d)\n"
+	   "Last Pixel: (%d, %d)\n"
+	   "Region Size: (%d, %d)\n",
+	   fx, fy, lx, ly, lx-fx+1, ly-fy+1);
+
+    mirror_image24(img, fx, fy, lx, ly); 
   }
 
   char * new_file_name = malloc(4+sizeof(file_name)+1);
