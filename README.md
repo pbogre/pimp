@@ -54,12 +54,27 @@ Various commands are planned for the future, but right now here are the instruct
 
 ---
 
+### mirror
+| argument | description | required |
+|----------|-------------|:--------:|
+| `first_x`  | Horizontal position of first pixel |❌|
+| `first_y`  | Vertical position of first pixel   |❌|
+| `last_x`   | Horizontal position of last pixel  |❌|
+| `last_y`   | Vertical position of last pixel    |❌| 
+
+**Examples**
+
+`pimp image.bmp bw` Mirrors entire image
+
+`pimp image.bmp bw 10 30 100 130` Mirrors pixels in range (10, 30) -> (100, 130)
+
+
 ## to-do
 - [x] ~~read & write bmp files~~
 - [x] ~~improve file structure~~
 - [x] ~~fill command~~
 - [x] ~~black and white command~~
-- [ ] mirror command
+- [x] mirror command
 - [ ] crop command
 - [ ] blur command
 - [ ] gaussian blur command
