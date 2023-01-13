@@ -74,7 +74,7 @@ Various commands are planned for the future, but right now here are the instruct
 - [x] ~~improve file structure~~
 - [x] ~~fill command~~
 - [x] ~~black and white command~~
-- [x] mirror command
+- [x] ~~mirror command~~
 - [ ] crop command
 - [ ] blur command
 - [ ] gaussian blur command
