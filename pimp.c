@@ -10,6 +10,7 @@
 #include "commands/fill.h"
 #include "commands/bw.h"
 #include "commands/mirror.h"
+#include "commands/crop.h"
 
 int main(int argc, char ** argv){
   char * file_name;
@@ -73,7 +74,6 @@ int main(int argc, char ** argv){
     black_white_image24(img, fx, fy, lx, ly); 
   }
 
-
   else if (strcmp(command, "mirror") == 0){
     int fx = 0;
     int fy = 0;
@@ -93,6 +93,27 @@ int main(int argc, char ** argv){
 	   fx, fy, lx, ly, lx-fx+1, ly-fy+1);
 
     mirror_image24(img, fx, fy, lx, ly); 
+  }
+
+  else if (strcmp(command, "crop") == 0){
+    int fx = 0;
+    int fy = 0;
+    int lx = img.width-1;
+    int ly = img.height-1;
+    if(argc > 3){
+      fx = strtol(argv[3], NULL, 10);
+      fy = strtol(argv[4], NULL, 10);
+      lx = strtol(argv[5], NULL, 10);
+      ly = strtol(argv[6], NULL, 10);
+    }
+
+    printf("--- CROP ---\n"
+	   "First Pixel: (%d, %d)\n"
+	   "Last Pixel: (%d, %d)\n"
+	   "Region Size: (%d, %d)\n",
+	   fx, fy, lx, ly, lx-fx+1, ly-fy+1);
+
+    crop_image24(&img, fx, fy, lx, ly);
   }
 
   char * new_file_name = malloc(4+sizeof(file_name)+1);
