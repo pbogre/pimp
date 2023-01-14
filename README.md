@@ -1,9 +1,6 @@
 # pimp
 Pimp your images using Pietro's Image Manipulation Project (P.I.M.P.)
 
-### Disclaimer
-This project is still heavily work in progress. Many features are missing and as of right now only the very bare bones of the idea are available.
-
 ## file formats
 As of right now, the program only accepts 24-bit and 32-bit **BITMAP** images.
 If you wish to convert your image to this format, you can do so very simply using ffmpeg:
