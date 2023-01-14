@@ -133,8 +133,10 @@ void bmp_from_image24(char * file_name, IMAGE img24){
   fwrite(&dibheader.compression, 6*sizeof(uint32_t), 1, fp);
  
   // y loop is backward because pixels must be bottom -> up
+  // padding is added for 4-byte alignment, required for 24-bit
+  int row_size = ((dibheader.color_depth * img24.width + 31) / 32) * 4;
   for(int y = img24.height-1; y >= 0; y--){
-    fwrite(&img24.pixels[y][0], img24.width, sizeof(RGB), fp);
+    fwrite(&img24.pixels[y][0], row_size, 1, fp);
   }
 
   fclose(fp);
