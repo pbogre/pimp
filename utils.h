@@ -16,3 +16,11 @@ RGB make_rgb_mono(uint32_t color){
 
   return rgb;
 }
+
+// different ways to convert to grayscale
+// but taking the average magnitude of each
+// value is probably the simplest
+int brightness_from_rgb(RGB rgb){
+  int brightness = (rgb.R + rgb.G + rgb.B) / 3;
+  return brightness;
+}
