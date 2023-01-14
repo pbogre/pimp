@@ -98,7 +98,7 @@ NOTE: All arguments that represent pixels positions, you are specifying the _ind
 - [x] ~~fill command~~
 - [x] ~~black and white command~~
 - [x] ~~mirror command~~
+- [x] ~~crop command~~
 - [ ] support 24-bit w/ padding as input
-- [ ] crop command
 - [ ] blur command
 - [ ] gaussian blur command
