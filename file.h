@@ -51,7 +51,9 @@ IMAGE image24_from_image32(IMAGE32 img32){
   img24.height = img32.height;
   img24.width = img32.width;
 
+  img24.pixels = (RGB**) malloc(img24.height*sizeof(void*));
   for(int y = 0; y < img32.height; y++){
+    img24.pixels[y] = (RGB*) malloc(img24.width*sizeof(RGB));
     for(int x = 0; x < img32.width; x++){
       img24.pixels[y][x] = rgb_from_rgba(img32.pixels[y][x]);
     }
@@ -132,9 +134,7 @@ void bmp_from_image24(char * file_name, IMAGE img24){
  
   // y loop is backward because pixels must be bottom -> up
   for(int y = img24.height-1; y >= 0; y--){
-    for(int x = 0; x < img24.width; x++){
-      fwrite(&img24.pixels[y][x], sizeof(RGB), 1, fp);
-    }
+    fwrite(&img24.pixels[y][0], img24.width, sizeof(RGB), fp);
   }
 
   fclose(fp);
