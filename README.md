@@ -75,6 +75,7 @@ Various commands are planned for the future, but right now here are the instruct
 - [x] ~~fill command~~
 - [x] ~~black and white command~~
 - [x] ~~mirror command~~
+- [ ] support 24-bit w/ padding
 - [ ] crop command
 - [ ] blur command
 - [ ] gaussian blur command
