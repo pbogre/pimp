@@ -25,15 +25,15 @@ NOTE: All arguments that represent pixels positions, you are specifying the _ind
 
 ## commands
 ### fill 
-| argument | description | required |
-|----------|-------------|:--------:|
-| `first_x`  | Horizontal position of first pixel | ✅ |
-| `first_y`  | Vertical position of first pixel   | ✅ |
-| `last_x`   | Horizontal position of last pixel  | ✅ |
-| `last_y`   | Vertical position of last pixel    | ✅ | 
-| `red`      | Red value of color (0-255) (Default: 0) |❌|
-| `green`    | Green value of color (0-255) (Default: 0) |❌|
-| `blue`     | Blue value of color (0-255) (Default: 0) |❌|
+| argument | description | required | default | 
+|----------|-------------|:--------:|---------|
+| `first_x`  | Horizontal position of first pixel | ✅ | |
+| `first_y`  | Vertical position of first pixel   | ✅ | |
+| `last_x`   | Horizontal position of last pixel  | ✅ | |
+| `last_y`   | Vertical position of last pixel    | ✅ | |
+| `red`      | Red value of color (0-255)         |❌  | `0` |
+| `green`    | Green value of color (0-255)       |❌  | `0` |
+| `blue`     | Blue value of color (0-255)        |❌  | `0` |
 
 **Examples**
 
@@ -44,12 +44,12 @@ NOTE: All arguments that represent pixels positions, you are specifying the _ind
 ---
 
 ### black and white
-| argument | description | required |
-|----------|-------------|:--------:|
-| `first_x`  | Horizontal position of first pixel |❌|
-| `first_y`  | Vertical position of first pixel   |❌|
-| `last_x`   | Horizontal position of last pixel  |❌|
-| `last_y`   | Vertical position of last pixel    |❌| 
+| argument | description | required | default | 
+|----------|-------------|:--------:|---------|
+| `first_x`  | Horizontal position of first pixel |❌| `0` |
+| `first_y`  | Vertical position of first pixel   |❌| `0` |
+| `last_x`   | Horizontal position of last pixel  |❌| `img.width-1` | 
+| `last_y`   | Vertical position of last pixel    |❌| `img.height-1` |
 
 **Examples**
 
@@ -60,12 +60,12 @@ NOTE: All arguments that represent pixels positions, you are specifying the _ind
 ---
 
 ### mirror
-| argument | description | required |
-|----------|-------------|:--------:|
-| `first_x`  | Horizontal position of first pixel |❌|
-| `first_y`  | Vertical position of first pixel   |❌|
-| `last_x`   | Horizontal position of last pixel  |❌|
-| `last_y`   | Vertical position of last pixel    |❌| 
+| argument | description | required | default | 
+|----------|-------------|:--------:|---------|
+| `first_x`  | Horizontal position of first pixel |❌| `0` |
+| `first_y`  | Vertical position of first pixel   |❌| `0` |
+| `last_x`   | Horizontal position of last pixel  |❌| `img.width-1` |
+| `last_y`   | Vertical position of last pixel    |❌| `img.height-1` |
 
 **Examples**
 
@@ -76,18 +76,36 @@ NOTE: All arguments that represent pixels positions, you are specifying the _ind
 ---
 
 ### crop
-| argument | description | required |
-|----------|-------------|:--------:|
-| `first_x`  | Horizontal position of first pixel | ✅ |
-| `first_y`  | Vertical position of first pixel   | ✅ |
-| `last_x`   | Horizontal position of last pixel  | ✅ |
-| `last_y`   | Vertical position of last pixel    | ✅ | 
+| argument | description | required | default | 
+|----------|-------------|:--------:|---------|
+| `first_x`  | Horizontal position of first pixel | ✅ |  |
+| `first_y`  | Vertical position of first pixel   | ✅ |  |
+| `last_x`   | Horizontal position of last pixel  | ✅ |  |
+| `last_y`   | Vertical position of last pixel    | ✅ |  |
 
 **Examples**
 
 `pimp image.bmp crop 30 30 60 60` Crops image to pixels in range (30, 30) -> (60, 60), giving a zoom effect
 
 ---
+
+### box blur
+| argument | description | required | default | 
+|----------|-------------|:--------:|---------|
+| `length`   | Length of blur boxes. (higher = more pixelated) | ❌ | `3` |
+| `first_x`  | Horizontal position of first pixel | ❌ | `0` |
+| `first_y`  | Vertical position of first pixel   | ❌ | `0` |
+| `last_x`   | Horizontal position of last pixel  | ❌ | `img.width-1` |
+| `last_y`   | Vertical position of last pixel    | ❌ | `img.height-1` |
+
+**Examples**
+
+`pimp image.bmp bblur 20` Blurs entire image with boxes of length 20
+
+`pimp image.bmp bblur 35 100 30 200 130` Blurs pixels in range (100, 30) -> (200, 130) with boxes of length 35
+
+---
+
 
 ## to-do
 - [x] ~~read & write bmp files~~
@@ -96,6 +114,7 @@ NOTE: All arguments that represent pixels positions, you are specifying the _ind
 - [x] ~~black and white command~~
 - [x] ~~mirror command~~
 - [x] ~~crop command~~
+- [x] ~~box blur command~~
 - [ ] support 24-bit w/ padding as input
-- [ ] blur command
+- [ ] image kernels (allows edge, emboss, blur, etc.)
 - [ ] gaussian blur command
