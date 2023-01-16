@@ -81,23 +81,23 @@ IMAGE image_from_bmp(char * file_name){
 
   fread(&dibheader.header_size, sizeof(DIBHEADER), 1, fp);
   printf("--- DIB HEADER ---\nHeader size: %d\nWidth: %d\nHeight: %d\nColor Panes: %d\n"
-	 "Color Depth: %d\nCompression: %d\nImage Size: %d\nHorizontal Res.: %d\n"
+	 "Bit Depth: %d\nCompression: %d\nImage Size: %d\nHorizontal Res.: %d\n"
 	 "Vertical Res.: %d\nNumber of Colors: %d\nNumber of Important Colors: %d\n\n",
 	 dibheader.header_size, dibheader.width, dibheader.height, dibheader.color_panes,
-	 dibheader.color_depth, dibheader.compression, dibheader.image_size,
+	 dibheader.bit_depth, dibheader.compression, dibheader.image_size,
 	 dibheader.hres, dibheader.vres, dibheader.number_colors, dibheader.number_important_colors);
 
   if(dibheader.header_size != 40 || dibheader.compression != 0 || 
-     (dibheader.color_depth != 24 && dibheader.color_depth != 32)){
-    printf("Bitmap must be 24-bit or 32-bit and use no compression. '%s' is %d-bit and uses compression %d.\n", file_name, dibheader.color_depth, dibheader.compression);
+     (dibheader.bit_depth != 24 && dibheader.bit_depth != 32)){
+    printf("Bitmap must be 24-bit or 32-bit and use no compression. '%s' is %d-bit and uses compression %d.\n", file_name, dibheader.bit_depth, dibheader.compression);
     fclose(fp); 
     exit(EXIT_FAILURE); 
   }
 
   fseek(fp, header.offset, SEEK_SET); // go to start of image data
   IMAGE img;
-  if(dibheader.color_depth == 24) img = image24_from_data(fp, dibheader.width, dibheader.height);
-  if(dibheader.color_depth == 32) img = image24_from_image32(image32_from_data(fp, dibheader.width, dibheader.height));  
+  if(dibheader.bit_depth == 24) img = image24_from_data(fp, dibheader.width, dibheader.height);
+  if(dibheader.bit_depth == 32) img = image24_from_image32(image32_from_data(fp, dibheader.width, dibheader.height));  
 
   fclose(fp);
 
@@ -117,7 +117,7 @@ void bmp_from_image24(char * file_name, IMAGE img24){
   dibheader.width = img24.width;
   dibheader.height = img24.height;
   dibheader.color_panes = 1;
-  dibheader.color_depth = 24;
+  dibheader.bit_depth = 24;
   dibheader.compression = 0;
   dibheader.image_size = img24.width*img24.height*3;
   dibheader.hres = 0;
@@ -134,7 +134,7 @@ void bmp_from_image24(char * file_name, IMAGE img24){
  
   // y loop is backward because pixels must be bottom -> up
   // padding is added for 4-byte alignment, required for 24-bit
-  int row_size = ((dibheader.color_depth * img24.width + 31) / 32) * 4;
+  int row_size = ((dibheader.bit_depth * img24.width + 31) / 32) * 4;
   for(int y = img24.height-1; y >= 0; y--){
     fwrite(&img24.pixels[y][0], row_size, 1, fp);
   }

@@ -14,7 +14,7 @@ typedef struct{
   int32_t width;          		// 4 Bytes
   int32_t height;         		// 4 Bytes
   uint16_t color_panes;   		// 2 Bytes
-  uint16_t color_depth;   		// 2 Bytes
+  uint16_t bit_depth;   		// 2 Bytes
   uint32_t compression;   		// 4 Bytes
   uint32_t image_size;			// 4 Bytes
   int32_t hres;				// 4 Bytes
