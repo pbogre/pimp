@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <string.h> // strcpy, strcat, strcmp
+#include <string.h>
 
 #include "bmp.h"
 #include "file.h"
@@ -11,6 +11,7 @@
 #include "commands/bw.h"
 #include "commands/mirror.h"
 #include "commands/crop.h"
+#include "commands/bblur.h"
 
 int main(int argc, char ** argv){
   char * file_name;
@@ -19,7 +20,7 @@ int main(int argc, char ** argv){
     file_name = argv[1];
     command = argv[2];
   }
-  else { printf("usage: pimp <file> { fill | mirror | bw | crop | gblur | blur } ...\n"); exit(EXIT_FAILURE); }
+  else { printf("usage: pimp <file> { fill | mirror | crop | w | blur | gblur } ...\n"); exit(EXIT_FAILURE); }
 
   IMAGE img = image_from_bmp(file_name);
 
@@ -106,6 +107,10 @@ int main(int argc, char ** argv){
       lx = strtol(argv[5], NULL, 10);
       ly = strtol(argv[6], NULL, 10);
     }
+    else{
+      printf("Missing required arguments: first x, first y, last x, last y.\n");
+      exit(EXIT_FAILURE);
+    }
 
     printf("--- CROP ---\n"
 	   "First Pixel: (%d, %d)\n"
@@ -114,6 +119,38 @@ int main(int argc, char ** argv){
 	   fx, fy, lx, ly, lx-fx+1, ly-fy+1);
 
     crop_image24(&img, fx, fy, lx, ly);
+  }
+
+  else if (strcmp(command, "bblur") == 0){ 
+    int length = 3;
+    if(argc > 3) length = strtol(argv[3], NULL, 10);
+
+    int fx = 0;
+    int fy = 0;
+    int lx = img.width-1;
+    int ly = img.height-1;
+    if(argc > 4){
+      fx = strtol(argv[4], NULL, 10);
+      fy = strtol(argv[5], NULL, 10);
+      lx = strtol(argv[6], NULL, 10);
+      ly = strtol(argv[7], NULL, 10);
+    }
+
+    printf("--- BOX BLUR ---\n"
+	   "Box Length: %d\n"
+	   "Region Extra (Ho.): %d\n"
+	   "Region Extra (Ve.): %d\n"
+	   "First Pixel: (%d, %d)\n"
+	   "Last Pixel: (%d, %d)\n"
+	   "Region Size: (%d, %d)\n",
+	   length, (lx-fx) % length, (ly-fy) % length, fx, fy, lx, ly, lx-fx+1, ly-fy+1);
+
+    box_blur_image24(img, length, fx, fy, lx ,ly);
+  }
+
+  else{
+    printf("Please specify a valid command.");
+    exit(EXIT_FAILURE);
   }
 
   char * new_file_name = malloc(4+sizeof(file_name)+1);
