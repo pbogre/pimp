@@ -125,6 +125,11 @@ int main(int argc, char ** argv){
     int length = 3;
     if(argc > 3) length = strtol(argv[3], NULL, 10);
 
+    if(length < 3){
+      printf("Chosen box length is too small. Minimum: 3.\n");
+      exit(EXIT_FAILURE);
+    }
+
     int fx = 0;
     int fy = 0;
     int lx = img.width-1;

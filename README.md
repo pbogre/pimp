@@ -92,7 +92,7 @@ NOTE: All arguments that represent pixels positions, you are specifying the _ind
 ### box blur
 | argument | description | required | default | 
 |----------|-------------|:--------:|---------|
-| `length`   | Length of blur boxes. (higher = more pixelated) | ❌ | `3` |
+| `length`   | Length of blur boxes. (higher = more pixelated) | ❌ | `3` (min.) |
 | `first_x`  | Horizontal position of first pixel | ❌ | `0` |
 | `first_y`  | Vertical position of first pixel   | ❌ | `0` |
 | `last_x`   | Horizontal position of last pixel  | ❌ | `img.width-1` |
